@@ -39,48 +39,28 @@ fn main() {
 // gpio_blinkled_signals.rs example to learn how to properly handle incoming
 // signals to prevent an abnormal termination.
 
+use rppal::gpio::Gpio;
 use std::error::Error;
 use std::thread;
 use std::time::Duration;
 
+use alpyne_rust::config::Config;
 use rppal::pwm::{Channel, Polarity, Pwm};
 
 // Servo configuration. Change these values based on your servo's verified safe
 // minimum and maximum values.
 //
 // Period: 20 ms (50 Hz). Pulse width: min. 1200 µs, neutral 1500 µs, max. 1800 µs.
-const PERIOD_MS: u64 = 20;
-const PULSE_MIN_US: u64 = 1200;
-const PULSE_NEUTRAL_US: u64 = 1500;
-const PULSE_MAX_US: u64 = 1800;
 
-fn main() -> Result<(), Box<dyn Error>> {
-    // Enable PWM channel 0 (BCM GPIO 18, physical pin 12) with the specified period,
-    // and rotate the servo by setting the pulse width to its maximum value.
-    let pwm = Pwm::with_period(
-        Channel::Pwm0,
-        Duration::from_millis(PERIOD_MS),
-        Duration::from_micros(PULSE_MAX_US),
-        Polarity::Normal,
-        true,
-    )?;
-
-    // Sleep for 500 ms while the servo moves into position.
-    thread::sleep(Duration::from_millis(500));
-
-    // Rotate the servo to the opposite side.
-    pwm.set_pulse_width(Duration::from_micros(PULSE_MIN_US))?;
-
-    thread::sleep(Duration::from_millis(500));
-
-    // Rotate the servo to its neutral (center) position in small steps.
-    for pulse in (PULSE_MIN_US..=PULSE_NEUTRAL_US).step_by(10) {
-        pwm.set_pulse_width(Duration::from_micros(pulse))?;
-        thread::sleep(Duration::from_millis(20));
-    }
-
-    Ok(())
-
-    // When the pwm variable goes out of scope, the PWM channel is automatically disabled.
-    // You can manually disable the channel by calling the Pwm::disable() method.
+fn main() {
+    let config: Config = Config::read("config.toml");
+    let motor_one_pin = config.motor_one_pin;
+    let mut motor_one_enable_pin = Gpio::new()?.get(motor_one_pin.enable)?.into_output();
+    let mut motor_one_input_one_pin = Gpio::new()?.get(motor_one_pin.input_one)?.into_output();
+    let mut motor_one_input_two_pin = Gpio::new()?.get(motor_one_pin.input_two)?.into_output();
+    let pwn_one = Pwm::with_frequency(Channel::Pwm0, 100.0, 1.0, Polarity::Normal, true)?;
+    motor_one_enable_pin.set_low();
+    motor_one_input_one_pin.set_low();
+    motor_one_input_two_pin.set_low();
+    motor_one_input_one_pin.set_high();
 }
