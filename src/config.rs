@@ -5,8 +5,8 @@ use std::fs;
 
 #[derive(Deserialize, Debug, PartialEq)]
 pub struct Config {
-    motor_one_pin: MotorPin,
-    motor_two_pin: MotorPin,
+    pub motor_one_pin: MotorPin,
+    pub motor_two_pin: MotorPin,
 }
 
 impl Config {
@@ -28,10 +28,10 @@ impl fmt::Display for Config {
 }
 
 #[derive(Deserialize, Debug, PartialEq)]
-struct MotorPin {
-    enable: u8,
-    input_one: u8,
-    input_two: u8,
+pub struct MotorPin {
+    pub enable: u8,
+    pub input_one: u8,
+    pub input_two: u8,
 }
 
 impl fmt::Display for MotorPin {
