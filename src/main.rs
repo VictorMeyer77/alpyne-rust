@@ -12,14 +12,14 @@ fn main() {
 
     direction.forward();
     thread::sleep(Duration::from_millis(2000));
-    println!("{:?}", direction.pwn_one.pulse_width());
+    println!("{:?}", direction.pwn_one.frequency());
     direction.backward();
     thread::sleep(Duration::from_millis(2000));
-    println!("{:?}", direction.pwn_one.pulse_width());
+    println!("{:?}", direction.pwn_one.frequency());
     direction.right();
     thread::sleep(Duration::from_millis(1000));
     direction.left();
-    println!("{:?}", direction.pwn_one.pulse_width());
+    println!("{:?}", direction.pwn_one.frequency());
     thread::sleep(Duration::from_millis(2000));
     direction.stop();
 }
