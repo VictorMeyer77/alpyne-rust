@@ -4,10 +4,10 @@ use rppal::pwm::{Channel, Polarity, Pwm};
 use std::error::Error;
 
 pub struct Direction {
-    //motor_one_enable_pin: OutputPin,
+    motor_one_enable_pin: OutputPin,
     motor_one_input_one_pin: OutputPin,
     motor_one_input_two_pin: OutputPin,
-    //motor_two_enable_pin: OutputPin,
+    motor_two_enable_pin: OutputPin,
     motor_two_input_one_pin: OutputPin,
     motor_two_input_two_pin: OutputPin,
     pub pwn_one: Pwm,
@@ -20,10 +20,10 @@ impl Direction {
         motor_two_pin: MotorPin,
     ) -> Result<Direction, Box<dyn Error>> {
         Ok(Direction {
-            //motor_one_enable_pin: Gpio::new()?.get(motor_one_pin.enable)?.into_output(),
+            motor_one_enable_pin: Gpio::new()?.get(motor_one_pin.enable)?.into_output(),
             motor_one_input_one_pin: Gpio::new()?.get(motor_one_pin.input_one)?.into_output(),
             motor_one_input_two_pin: Gpio::new()?.get(motor_one_pin.input_two)?.into_output(),
-            //motor_two_enable_pin: Gpio::new()?.get(motor_two_pin.enable)?.into_output(),
+            motor_two_enable_pin: Gpio::new()?.get(motor_two_pin.enable)?.into_output(),
             motor_two_input_one_pin: Gpio::new()?.get(motor_two_pin.input_one)?.into_output(),
             motor_two_input_two_pin: Gpio::new()?.get(motor_two_pin.input_two)?.into_output(),
             pwn_one: Pwm::with_frequency(Channel::Pwm0, 100.0, 1.0, Polarity::Normal, true)?,
