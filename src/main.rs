@@ -7,7 +7,7 @@ fn main() {
     //println!("{}", Config::read("config.toml"));
     let config: Config = Config::read("config.toml");
     let mut direction = Direction::build(config.motor_one_pin, config.motor_two_pin).unwrap();
-
+    direction.stop();
     println!("{:?}", direction.pwn_one.pulse_width());
 
     direction.forward();
