@@ -63,5 +63,6 @@ fn main() -> Result<(), Box<dyn Error>> {
     motor_one_input_one_pin.set_low();
     motor_one_input_two_pin.set_low();
     motor_one_input_one_pin.set_high();
+    thread::sleep(Duration::from_millis(9000));
     Ok(())
 }
