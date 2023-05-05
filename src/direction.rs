@@ -26,8 +26,8 @@ impl Direction {
             //motor_two_enable_pin: Gpio::new()?.get(motor_two_pin.enable)?.into_output(),
             motor_two_input_one_pin: Gpio::new()?.get(motor_two_pin.input_one)?.into_output(),
             motor_two_input_two_pin: Gpio::new()?.get(motor_two_pin.input_two)?.into_output(),
-            pwn_one: Pwm::with_frequency(Channel::Pwm0, 8.0, 0.5, Polarity::Normal, true)?,
-            pwn_two: Pwm::with_frequency(Channel::Pwm1, 8.0, 0.5, Polarity::Normal, true)?,
+            pwn_one: Pwm::with_frequency(Channel::Pwm0, 8.0, 1.0, Polarity::Normal, true)?,
+            pwn_two: Pwm::with_frequency(Channel::Pwm1, 8.0, 1.0, Polarity::Normal, true)?,
         })
     }
 
