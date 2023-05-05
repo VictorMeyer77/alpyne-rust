@@ -1,5 +1,5 @@
-use alpyne_rust::config;
+use alpyne_rust::config::Config;
 
 fn main() {
-    println!("{}", config::read_config("config.toml"));
+    println!("{}", Config::read("config.toml"));
 }

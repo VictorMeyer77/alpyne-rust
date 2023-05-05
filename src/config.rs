@@ -9,6 +9,13 @@ pub struct Config {
     motor_two_pin: MotorPin,
 }
 
+impl Config {
+    pub fn read(path: &str) -> Config {
+        let file_content: String = fs::read_to_string(path).unwrap();
+        toml::from_str(file_content.as_str()).unwrap()
+    }
+}
+
 impl fmt::Display for Config {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
         write!(
@@ -35,11 +42,6 @@ impl fmt::Display for MotorPin {
             self.enable, self.input_one, self.input_two
         )
     }
-}
-
-pub fn read_config(path: &str) -> Config {
-    let file_content: String = fs::read_to_string(path).unwrap();
-    toml::from_str(file_content.as_str()).unwrap()
 }
 
 #[cfg(test)]
@@ -83,7 +85,7 @@ input_two = 6
         ";
         let mut file = File::create(config_path).unwrap();
         file.write_all(str_config.as_bytes()).unwrap();
-        assert_eq!(read_config(config_path), generate_test_config());
+        assert_eq!(Config::read(config_path), generate_test_config());
         fs::remove_file(config_path).unwrap();
     }
 
