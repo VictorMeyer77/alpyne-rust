@@ -10,8 +10,8 @@ pub struct Direction {
     //motor_two_enable_pin: OutputPin,
     motor_two_input_one_pin: OutputPin,
     motor_two_input_two_pin: OutputPin,
-    pwn_one: Pwm,
-    pwn_two: Pwm,
+    pub pwn_one: Pwm,
+    pub pwn_two: Pwm,
 }
 
 impl Direction {
