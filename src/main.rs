@@ -59,7 +59,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let mut motor_one_input_one_pin = Gpio::new()?.get(motor_one_pin.input_one)?.into_output();
     let mut motor_one_input_two_pin = Gpio::new()?.get(motor_one_pin.input_two)?.into_output();
     let mut pwn_one = Pwm::new(Channel::Pwm0)?;
-    pwn_one.set_frequency(100.0, 100.0);
+    pwn_one.set_frequency(8000.0, 100.0);
     motor_one_enable_pin.set_low();
     motor_one_input_one_pin.set_low();
     motor_one_input_two_pin.set_low();
