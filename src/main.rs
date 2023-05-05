@@ -52,7 +52,7 @@ use rppal::pwm::{Channel, Polarity, Pwm};
 //
 // Period: 20 ms (50 Hz). Pulse width: min. 1200 µs, neutral 1500 µs, max. 1800 µs.
 
-fn main() {
+fn main() -> Result<(), Box<dyn Error>> {
     let config: Config = Config::read("config.toml");
     let motor_one_pin = config.motor_one_pin;
     let mut motor_one_enable_pin = Gpio::new()?.get(motor_one_pin.enable)?.into_output();
@@ -63,4 +63,5 @@ fn main() {
     motor_one_input_one_pin.set_low();
     motor_one_input_two_pin.set_low();
     motor_one_input_one_pin.set_high();
+    Ok(())
 }
