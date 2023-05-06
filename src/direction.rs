@@ -98,13 +98,14 @@ mod tests {
 
     #[test]
     fn build_should_create_direction() -> () {
-        let direction_buffer: Direction = generate_test_direction();
+        let _direction_buffer: Direction = generate_test_direction();
         let motor_one_enable_pin: Result<Pin, Error> = Gpio::new().unwrap().get(5);
         let motor_one_input_one_pin: Result<Pin, Error> = Gpio::new().unwrap().get(6);
         let motor_one_input_two_pin: Result<Pin, Error> = Gpio::new().unwrap().get(13);
         let motor_two_enable_pin: Result<Pin, Error> = Gpio::new().unwrap().get(10);
         let motor_two_input_one_pin: Result<Pin, Error> = Gpio::new().unwrap().get(9);
         let motor_two_input_two_pin: Result<Pin, Error> = Gpio::new().unwrap().get(11);
+        println!("{}", motor_one_enable_pin.err().unwrap());
         assert!(motor_one_enable_pin.is_err());
         assert!(motor_one_input_one_pin.is_err());
         assert!(motor_one_input_two_pin.is_err());
