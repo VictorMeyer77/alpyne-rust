@@ -114,7 +114,7 @@ mod tests {
     }
 
     #[test]
-    fn init_should_set_init_output_pin() -> () {
+    fn init_should_set_output_pin() -> () {
         let mut direction: Direction = generate_test_direction();
         direction.init();
         assert!(direction.motor_one_enable_pin.is_set_high());
@@ -126,7 +126,7 @@ mod tests {
     }
 
     #[test]
-    fn init_should_set_forward_output_pin() -> () {
+    fn forward_should_set_output_pin() -> () {
         let mut direction: Direction = generate_test_direction();
         direction.forward();
         assert!(direction.motor_one_enable_pin.is_set_high());
@@ -138,7 +138,7 @@ mod tests {
     }
 
     #[test]
-    fn init_should_set_backward_output_pin() -> () {
+    fn backward_should_set_output_pin() -> () {
         let mut direction: Direction = generate_test_direction();
         direction.backward();
         assert!(direction.motor_one_enable_pin.is_set_high());
