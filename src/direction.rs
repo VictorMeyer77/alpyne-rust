@@ -97,7 +97,7 @@ mod tests {
     }
 
     #[test]
-    fn build_should_create_direction() -> () {
+    fn build_should_init_output_pins() -> () {
         let _direction: Direction = generate_test_direction();
         let motor_one_enable_pin: Result<Pin, Error> = Gpio::new().unwrap().get(5);
         let motor_one_input_one_pin: Result<Pin, Error> = Gpio::new().unwrap().get(6);
@@ -114,7 +114,7 @@ mod tests {
     }
 
     #[test]
-    fn init_should_set_output_pin() -> () {
+    fn init_should_set_pin_states() -> () {
         let mut direction: Direction = generate_test_direction();
         direction.init();
         assert!(direction.motor_one_enable_pin.is_set_high());
@@ -126,7 +126,7 @@ mod tests {
     }
 
     #[test]
-    fn forward_should_set_output_pin() -> () {
+    fn forward_should_set_pin_states() -> () {
         let mut direction: Direction = generate_test_direction();
         direction.forward();
         assert!(direction.motor_one_enable_pin.is_set_low());
@@ -138,7 +138,7 @@ mod tests {
     }
 
     #[test]
-    fn backward_should_set_output_pin() -> () {
+    fn backward_should_set_pin_states() -> () {
         let mut direction: Direction = generate_test_direction();
         direction.backward();
         assert!(direction.motor_one_enable_pin.is_set_low());
@@ -147,5 +147,48 @@ mod tests {
         assert!(direction.motor_two_enable_pin.is_set_low());
         assert!(direction.motor_two_input_one_pin.is_set_low());
         assert!(direction.motor_two_input_two_pin.is_set_high());
+    }
+
+    #[test]
+    fn right_should_set_pin_states() -> () {
+        let mut direction: Direction = generate_test_direction();
+        direction.right();
+        assert!(direction.motor_one_enable_pin.is_set_low());
+        assert!(direction.motor_one_input_one_pin.is_set_high());
+        assert!(direction.motor_one_input_two_pin.is_set_low());
+        assert!(direction.motor_two_enable_pin.is_set_low());
+        assert!(direction.motor_two_input_one_pin.is_set_low());
+        assert!(direction.motor_two_input_two_pin.is_set_low());
+    }
+
+    #[test]
+    fn left_should_set_pin_states() -> () {
+        let mut direction: Direction = generate_test_direction();
+        direction.left();
+        assert!(direction.motor_one_enable_pin.is_set_low());
+        assert!(direction.motor_one_input_one_pin.is_set_low());
+        assert!(direction.motor_one_input_two_pin.is_set_low());
+        assert!(direction.motor_two_enable_pin.is_set_low());
+        assert!(direction.motor_two_input_one_pin.is_set_low());
+        assert!(direction.motor_two_input_two_pin.is_set_high());
+    }
+
+    #[test]
+    fn drop_should_disable_pin_states() -> () {
+        {
+            let _direction: Direction = generate_test_direction();
+        }
+        let motor_one_enable_pin: Result<Pin, Error> = Gpio::new().unwrap().get(5);
+        let motor_one_input_one_pin: Result<Pin, Error> = Gpio::new().unwrap().get(6);
+        let motor_one_input_two_pin: Result<Pin, Error> = Gpio::new().unwrap().get(13);
+        let motor_two_enable_pin: Result<Pin, Error> = Gpio::new().unwrap().get(10);
+        let motor_two_input_one_pin: Result<Pin, Error> = Gpio::new().unwrap().get(9);
+        let motor_two_input_two_pin: Result<Pin, Error> = Gpio::new().unwrap().get(11);
+        assert!(motor_one_enable_pin.is_ok());
+        assert!(motor_one_input_one_pin.is_ok());
+        assert!(motor_one_input_two_pin.is_ok());
+        assert!(motor_two_enable_pin.is_ok());
+        assert!(motor_two_input_one_pin.is_ok());
+        assert!(motor_two_input_two_pin.is_ok());
     }
 }
