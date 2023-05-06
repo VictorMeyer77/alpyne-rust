@@ -73,6 +73,5 @@ impl Drop for Direction {
         self.stop();
         self.motor_one_enable_pin.set_low();
         self.motor_two_enable_pin.set_low();
-        println!("tmp drop dir")
     }
 }
