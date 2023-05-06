@@ -169,8 +169,8 @@ mod tests {
         assert!(direction.motor_one_input_one_pin.is_set_low());
         assert!(direction.motor_one_input_two_pin.is_set_low());
         assert!(direction.motor_two_enable_pin.is_set_low());
-        assert!(direction.motor_two_input_one_pin.is_set_low());
-        assert!(direction.motor_two_input_two_pin.is_set_high());
+        assert!(direction.motor_two_input_one_pin.is_set_high());
+        assert!(direction.motor_two_input_two_pin.is_set_low());
     }
 
     #[test]
