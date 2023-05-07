@@ -7,6 +7,7 @@ use std::fs;
 pub struct Config {
     pub motor_one_pin: MotorPin,
     pub motor_two_pin: MotorPin,
+    pub ultrasonic_pin: UltrasonicPin,
 }
 
 impl Config {
@@ -21,8 +22,9 @@ impl fmt::Display for Config {
         write!(
             f,
             "Motor One Pin -> {}\n\
-            Motor Two Pin -> {}",
-            self.motor_one_pin, self.motor_two_pin
+            Motor Two Pin -> {}\n\
+            Ultrasonic Pin -> {}",
+            self.motor_one_pin, self.motor_two_pin, self.ultrasonic_pin
         )
     }
 }
@@ -41,6 +43,18 @@ impl fmt::Display for MotorPin {
             "Enable {}, Input One {}, Input Two {}",
             self.enable, self.input_one, self.input_two
         )
+    }
+}
+
+#[derive(Deserialize, Debug, PartialEq)]
+pub struct UltrasonicPin {
+    pub trigger: u8,
+    pub echo: u8,
+}
+
+impl fmt::Display for UltrasonicPin {
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+        write!(f, "Trigger {}, Echo {}", self.trigger, self.echo)
     }
 }
 
@@ -63,9 +77,14 @@ mod tests {
             input_one: 5,
             input_two: 6,
         };
+        let ultrasonic_pin: UltrasonicPin = UltrasonicPin {
+            trigger: 7,
+            echo: 8,
+        };
         Config {
             motor_one_pin,
             motor_two_pin,
+            ultrasonic_pin,
         }
     }
 
@@ -82,6 +101,10 @@ input_two = 3
 enable = 4
 input_one = 5
 input_two = 6
+
+[ultrasonic_pin]
+trigger = 7
+echo = 8
         ";
         let mut file = File::create(config_path).unwrap();
         file.write_all(str_config.as_bytes()).unwrap();
@@ -96,7 +119,8 @@ input_two = 6
             config.to_string(),
             "\
 Motor One Pin -> Enable 1, Input One 2, Input Two 3
-Motor Two Pin -> Enable 4, Input One 5, Input Two 6"
+Motor Two Pin -> Enable 4, Input One 5, Input Two 6
+Ultrasonic Pin -> Trigger 7, Echo 8"
         );
     }
 }
