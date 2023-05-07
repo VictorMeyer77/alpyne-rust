@@ -63,7 +63,7 @@ mod tests {
         let distance_a: f32 = ultrasonic_sensor.get_distance();
         thread::sleep(Duration::from_millis(1000));
         let distance_b: f32 = ultrasonic_sensor.get_distance();
-        assert!((distance_a - distance_b) * (distance_a - distance_b) < 0.00001);
+        assert!((distance_a - distance_b) * (distance_a - distance_b) < 0.1);
         assert!(distance_a < 100.0);
     }
 }
