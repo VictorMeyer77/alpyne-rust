@@ -7,3 +7,7 @@ input_two = 16
 enable = 19
 input_one = 23
 input_two = 24
+
+[ultrasonic_pin]
+trigger = 17
+echo = 27
