@@ -37,6 +37,7 @@ impl UltrasonicSensor {
 mod tests {
 
     use super::*;
+    use crate::sense::ultrasonic;
     use rppal::gpio::{Error, Pin};
 
     fn generate_test_ultrasonic_sensor() -> UltrasonicSensor {
@@ -52,16 +53,16 @@ mod tests {
         let _ultrasonic_sensor: UltrasonicSensor = generate_test_ultrasonic_sensor();
         let trigger_pin: Result<Pin, Error> = Gpio::new().unwrap().get(17);
         let echo_pin: Result<Pin, Error> = Gpio::new().unwrap().get(27);
-        assert!(motor_one_enable_pin.is_err());
-        assert!(motor_one_input_one_pin.is_err());
+        assert!(trigger_pin.is_err());
+        assert!(echo_pin.is_err());
     }
 
     #[test]
     fn get_distance_should_return_distance_cm() -> () {
         let mut ultrasonic_sensor: UltrasonicSensor = generate_test_ultrasonic_sensor();
-        let distance_a: f32 = UltrasonicSensor::get_distance();
+        let distance_a: f32 = ultrasonic_sensor.get_distance();
         thread::sleep(Duration::from_millis(1000));
-        let distance_b: f32 = UltrasonicSensor::get_distance();
+        let distance_b: f32 = ultrasonic_sensor.get_distance();
         assert!((distance_a - distance_b) * (distance_a - distance_b) < 0.00001);
         assert!(distance_a < 100.0);
     }
