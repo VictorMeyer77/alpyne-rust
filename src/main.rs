@@ -24,7 +24,7 @@ fn main() {
     thread::sleep(Duration::from_millis(2000));
 
     direction.stop();*/
-    let t = UltrasonicSensor(config::UltrasonicPin);
+    let mut t = UltrasonicSensor::build(config.ultrasonic_pin).unwrap();
     println!("{}", t.get_distance());
     thread::sleep(Duration::from_millis(2000));
     println!("{}", t.get_distance());
