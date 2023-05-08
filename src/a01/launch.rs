@@ -46,7 +46,7 @@ fn a01_loop(
 fn is_blocked(history_dist: &Vec<u16>, history_max_size: usize) -> bool {
     let mut history_dist_buffer: Vec<u16> = history_dist.clone();
     history_dist_buffer.dedup();
-    history_dist_buffer.len() == 1 && history_dist.len() > history_max_size
+    history_dist_buffer.len() == 1 && history_dist.len() == history_max_size
 }
 
 fn history_add(history_dist: &mut Vec<u16>, history_max_size: usize, value: u16) -> () {
