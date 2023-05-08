@@ -66,8 +66,8 @@ mod tests {
     fn is_blocked_should_return_true_when_history_distance_is_same() -> () {
         let blocked_history: Vec<u16> = vec![1, 1, 1, 1, 1];
         let normal_history: Vec<u16> = vec![1, 2, 3, 4, 5];
-        assert!(is_blocked(&blocked_history));
-        assert!(!is_blocked(&normal_history));
+        assert!(is_blocked(&blocked_history, 5));
+        assert!(!is_blocked(&normal_history, 5));
     }
 
     #[test]
