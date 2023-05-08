@@ -8,8 +8,8 @@ use std::time::Duration;
 
 fn main() {
     let config: Config = Config::read("config.toml");
-    /*let mut direction: Direction =
-        Direction::build(config.motor_one_pin, config.motor_two_pin).unwrap();
+    let mut direction: Direction =
+        Direction::build(&config.motor_one_pin, &config.motor_two_pin).unwrap();
     direction.init();
 
     direction.forward();
@@ -24,16 +24,16 @@ fn main() {
     direction.left();
     thread::sleep(Duration::from_millis(2000));
 
-    direction.stop();
-    let mut t = UltrasonicSensor::build(&config.ultrasonic_pin).unwrap();
-    println!("{}", t.get_distance());
-    thread::sleep(Duration::from_millis(2000));
-    println!("{}", t.get_distance());
-    thread::sleep(Duration::from_millis(2000));
-    println!("{}", t.get_distance());
-    thread::sleep(Duration::from_millis(2000));
-    println!("{}", t.get_distance());
-    thread::sleep(Duration::from_millis(2000));*/
+    direction.stop(); /*
+                      let mut t = UltrasonicSensor::build(&config.ultrasonic_pin).unwrap();
+                      println!("{}", t.get_distance());
+                      thread::sleep(Duration::from_millis(2000));
+                      println!("{}", t.get_distance());
+                      thread::sleep(Duration::from_millis(2000));
+                      println!("{}", t.get_distance());
+                      thread::sleep(Duration::from_millis(2000));
+                      println!("{}", t.get_distance());
+                      thread::sleep(Duration::from_millis(2000));*/
 
-    launch(&config).unwrap();
+    //launch(&config).unwrap();
 }
