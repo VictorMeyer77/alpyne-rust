@@ -22,12 +22,13 @@ fn a01_loop(
     ultrasonic_sensor: &mut UltrasonicSensor,
     history_dist: &mut Vec<u16>,
 ) -> () {
+    let history_max_size: usize = 4;
     let current_dist: u16 = ultrasonic_sensor.get_distance() as u16;
-    history_add(history_dist, 5, current_dist);
+    history_add(history_dist, history_max_size, current_dist);
     println!("{}", current_dist);
-    if is_blocked(&history_dist, 5) {
+    if is_blocked(&history_dist, history_max_size) {
         direction.backward();
-        thread::sleep(Duration::from_millis(500));
+        thread::sleep(Duration::from_millis(1500));
     } else if current_dist < 50 {
         let dir: u8 = rand::thread_rng().gen_range(0..=1);
         if dir == 0 {
