@@ -3,14 +3,26 @@ use crate::direction::Direction;
 use crate::sense::ultrasonic::UltrasonicSensor;
 use rand::Rng;
 use std::error::Error;
+use std::thread;
+use std::time::Duration;
 
 pub fn launch(config: &Config) -> Result<(), Box<dyn Error>> {
     let mut direction: Direction = Direction::build(&config.motor_one_pin, &config.motor_two_pin)?;
     let mut ultrasonic_sensor: UltrasonicSensor = UltrasonicSensor::build(&config.ultrasonic_pin)?;
     let mut history_dist: Vec<u16> = vec![];
 
+    a01_loop(&mut direction, &mut ultrasonic_sensor, &mut history_dist);
+
+    Ok(())
+}
+
+fn a01_loop(
+    direction: &mut Direction,
+    ultrasonic_sensor: &mut UltrasonicSensor,
+    history_dist: &mut Vec<u16>,
+) -> () {
     let current_dist: u16 = ultrasonic_sensor.get_distance() as u16;
-    history_add(&mut history_dist, 5, current_dist);
+    history_add(history_dist, 5, current_dist);
     println!("{}", current_dist);
     if current_dist < 50 {
         let dir: u8 = rand::thread_rng().gen_range(0..=1);
@@ -24,8 +36,8 @@ pub fn launch(config: &Config) -> Result<(), Box<dyn Error>> {
     } else {
         direction.forward();
     }
-
-    Ok(())
+    thread::sleep(Duration::from_millis(1000));
+    a01_loop(direction, ultrasonic_sensor, history_dist);
 }
 
 fn is_blocked(history_dist: &Vec<u16>) -> bool {
