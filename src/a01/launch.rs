@@ -25,26 +25,28 @@ fn a01_loop(
     let current_dist: u16 = ultrasonic_sensor.get_distance() as u16;
     history_add(history_dist, 5, current_dist);
     println!("{}", current_dist);
-    if current_dist < 50 {
+    if is_blocked(&history_dist, 5) {
+        direction.backward();
+        thread::sleep(Duration::from_millis(500));
+    } else if current_dist < 50 {
         let dir: u8 = rand::thread_rng().gen_range(0..=1);
         if dir == 0 {
             direction.left();
         } else {
             direction.right();
         }
-    } else if is_blocked(&history_dist) {
-        direction.backward();
+        thread::sleep(Duration::from_millis(1000));
     } else {
         direction.forward();
+        thread::sleep(Duration::from_millis(500));
     }
-    thread::sleep(Duration::from_millis(1000));
     a01_loop(direction, ultrasonic_sensor, history_dist);
 }
 
-fn is_blocked(history_dist: &Vec<u16>) -> bool {
+fn is_blocked(history_dist: &Vec<u16>, history_max_size: usize) -> bool {
     let mut history_dist_buffer: Vec<u16> = history_dist.clone();
     history_dist_buffer.dedup();
-    history_dist_buffer.len() == 1
+    history_dist_buffer.len() == 1 && history_dist.len() > history_max_size
 }
 
 fn history_add(history_dist: &mut Vec<u16>, history_max_size: usize, value: u16) -> () {
