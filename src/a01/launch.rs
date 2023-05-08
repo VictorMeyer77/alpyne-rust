@@ -11,6 +11,7 @@ pub fn launch(config: &Config) -> Result<(), Box<dyn Error>> {
     let mut ultrasonic_sensor: UltrasonicSensor = UltrasonicSensor::build(&config.ultrasonic_pin)?;
     let mut history_dist: Vec<u16> = vec![];
 
+    direction.init();
     a01_loop(&mut direction, &mut ultrasonic_sensor, &mut history_dist);
 
     Ok(())
