@@ -10,7 +10,7 @@ pub fn launch(config: &Config) -> Result<(), Box<dyn Error>> {
 
     let current_dist: u16 = ultrasonic_sensor.get_distance() as u16;
     history_add(&mut history_dist, 5, current_dist);
-
+    println!("{}", current_dist);
     if current_dist < 50 {
         let dir: u8 = rand::thread_rng().gen_range(0..2);
         if dir == 0 {
