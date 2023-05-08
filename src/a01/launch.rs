@@ -1,6 +1,7 @@
 use crate::config::Config;
 use crate::direction::Direction;
 use crate::sense::ultrasonic::UltrasonicSensor;
+use rand::Rng;
 use std::error::Error;
 
 pub fn launch(config: &Config) -> Result<(), Box<dyn Error>> {
@@ -12,7 +13,7 @@ pub fn launch(config: &Config) -> Result<(), Box<dyn Error>> {
     history_add(&mut history_dist, 5, current_dist);
     println!("{}", current_dist);
     if current_dist < 50 {
-        let dir: u8 = rand::thread_rng().gen_range(0..2);
+        let dir: u8 = rand::thread_rng().gen_range(0..=1);
         if dir == 0 {
             direction.left();
         } else {
