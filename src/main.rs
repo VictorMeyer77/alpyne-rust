@@ -1,3 +1,4 @@
+use alpyne_rust::a01::launch::launch;
 use alpyne_rust::config;
 use alpyne_rust::config::Config;
 use alpyne_rust::direction::Direction;
@@ -23,8 +24,8 @@ fn main() {
     direction.left();
     thread::sleep(Duration::from_millis(2000));
 
-    direction.stop();*/
-    let mut t = UltrasonicSensor::build(config.ultrasonic_pin).unwrap();
+    direction.stop();
+    let mut t = UltrasonicSensor::build(&config.ultrasonic_pin).unwrap();
     println!("{}", t.get_distance());
     thread::sleep(Duration::from_millis(2000));
     println!("{}", t.get_distance());
@@ -32,5 +33,7 @@ fn main() {
     println!("{}", t.get_distance());
     thread::sleep(Duration::from_millis(2000));
     println!("{}", t.get_distance());
-    thread::sleep(Duration::from_millis(2000));
+    thread::sleep(Duration::from_millis(2000));*/
+
+    launch(&config).unwrap();
 }
