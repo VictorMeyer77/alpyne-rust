@@ -13,8 +13,8 @@ pub struct Direction {
 
 impl Direction {
     pub fn build(
-        motor_one_pin: MotorPin,
-        motor_two_pin: MotorPin,
+        motor_one_pin: &MotorPin,
+        motor_two_pin: &MotorPin,
     ) -> Result<Direction, Box<dyn Error>> {
         Ok(Direction {
             motor_one_enable_pin: Gpio::new()?.get(motor_one_pin.enable)?.into_output(),
@@ -93,7 +93,7 @@ mod tests {
             input_one: 9,
             input_two: 11,
         };
-        Direction::build(motor_one_pin, motor_two_pin).unwrap()
+        Direction::build(&motor_one_pin, &motor_two_pin).unwrap()
     }
 
     #[test]

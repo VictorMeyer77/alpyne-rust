@@ -10,7 +10,7 @@ pub struct UltrasonicSensor {
 }
 
 impl UltrasonicSensor {
-    pub fn build(ultrasonic_pin: UltrasonicPin) -> Result<UltrasonicSensor, Box<dyn Error>> {
+    pub fn build(ultrasonic_pin: &UltrasonicPin) -> Result<UltrasonicSensor, Box<dyn Error>> {
         Ok(UltrasonicSensor {
             trigger_pin: Gpio::new()?.get(ultrasonic_pin.trigger)?.into_output(),
             echo_pin: Gpio::new()?.get(ultrasonic_pin.echo)?.into_input(),
@@ -45,7 +45,7 @@ mod tests {
             trigger: 17,
             echo: 27,
         };
-        UltrasonicSensor::build(ultrasonic_pin).unwrap()
+        UltrasonicSensor::build(&ultrasonic_pin).unwrap()
     }
 
     #[test]
