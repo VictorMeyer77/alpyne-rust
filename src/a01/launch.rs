@@ -86,7 +86,7 @@ mod tests {
         assert!(is_blocked(&blocked_history_a, 5));
         assert!(is_blocked(&blocked_history_b, 5));
         assert!(is_blocked(&blocked_history_c, 5));
-        assert!(!is_blocked(&normal_history, 5));
+        assert!(!is_blocked(&normal_history_a, 5));
         assert!(!is_blocked(&normal_history_b, 5));
     }
 
