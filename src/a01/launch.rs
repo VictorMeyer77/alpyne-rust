@@ -1,5 +1,5 @@
 use crate::config::Config;
-use crate::direction::Direction;
+use crate::motor::{Direction, Motor};
 use crate::sense::ultrasonic::UltrasonicSensor;
 use rand::Rng;
 use std::error::Error;
@@ -7,18 +7,18 @@ use std::thread;
 use std::time::Duration;
 
 pub fn launch(config: &Config) -> Result<(), Box<dyn Error>> {
-    let mut direction: Direction = Direction::build(&config.motor_one_pin, &config.motor_two_pin)?;
+    let mut motor: Motor = Motor::build(&config.motor_one_pin, &config.motor_two_pin)?;
     let mut ultrasonic_sensor: UltrasonicSensor = UltrasonicSensor::build(&config.ultrasonic_pin)?;
     let mut history_dist: Vec<u16> = vec![];
 
-    direction.init();
-    a01_loop(&mut direction, &mut ultrasonic_sensor, &mut history_dist);
+    motor.init();
+    a01_loop(&mut motor, &mut ultrasonic_sensor, &mut history_dist);
 
     Ok(())
 }
 
 fn a01_loop(
-    direction: &mut Direction,
+    motor: &mut Motor,
     ultrasonic_sensor: &mut UltrasonicSensor,
     history_dist: &mut Vec<u16>,
 ) -> () {
@@ -27,21 +27,21 @@ fn a01_loop(
     history_add(history_dist, history_max_size, current_dist);
     println!("{}", current_dist);
     if is_blocked(&history_dist, history_max_size) {
-        direction.backward();
+        motor.drive(Direction::Backward);
         thread::sleep(Duration::from_millis(1500));
     } else if current_dist < 50 {
         let dir: u8 = rand::thread_rng().gen_range(0..=1);
         if dir == 0 {
-            direction.left();
+            motor.drive(Direction::Left);
         } else {
-            direction.right();
+            motor.drive(Direction::Right);
         }
         thread::sleep(Duration::from_millis(1000));
     } else {
-        direction.forward();
+        motor.drive(Direction::Forward);
         thread::sleep(Duration::from_millis(500));
     }
-    a01_loop(direction, ultrasonic_sensor, history_dist);
+    a01_loop(motor, ultrasonic_sensor, history_dist);
 }
 
 fn is_blocked(history_dist: &Vec<u16>, history_max_size: usize) -> bool {
