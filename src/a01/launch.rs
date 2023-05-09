@@ -3,6 +3,8 @@ use crate::motor::{Direction, Motor};
 use crate::sense::ultrasonic::UltrasonicSensor;
 use rand::Rng;
 use std::error::Error;
+use std::sync::atomic::{AtomicBool, Ordering};
+use std::sync::Arc;
 use std::thread;
 use std::time::Duration;
 
@@ -10,14 +12,19 @@ pub fn launch(config: &Config) -> Result<(), Box<dyn Error>> {
     let mut motor: Motor = Motor::build(&config.motor_one_pin, &config.motor_two_pin)?;
     let mut ultrasonic_sensor: UltrasonicSensor = UltrasonicSensor::build(&config.ultrasonic_pin)?;
     let mut history_dist: Vec<u16> = vec![];
-
+    let running: Arc<AtomicBool> = Arc::new(AtomicBool::new(true));
+    let running_clone: Arc<AtomicBool> = running.clone();
+    ctrlc::set_handler(move || {
+        running_clone.store(false, Ordering::SeqCst);
+    })?;
     motor.init();
-    a01_loop(&mut motor, &mut ultrasonic_sensor, &mut history_dist);
-
+    while running.load(Ordering::SeqCst) {
+        iteration(&mut motor, &mut ultrasonic_sensor, &mut history_dist);
+    }
     Ok(())
 }
 
-fn a01_loop(
+fn iteration(
     motor: &mut Motor,
     ultrasonic_sensor: &mut UltrasonicSensor,
     history_dist: &mut Vec<u16>,
@@ -41,7 +48,6 @@ fn a01_loop(
         motor.drive(Direction::Forward);
         thread::sleep(Duration::from_millis(500));
     }
-    a01_loop(motor, ultrasonic_sensor, history_dist);
 }
 
 fn is_blocked(history_dist: &Vec<u16>, history_max_size: usize) -> bool {
