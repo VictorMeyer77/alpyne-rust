@@ -6,25 +6,25 @@
 |------------------|-----------------|-------------|---------------|-------------------|------------|------------|
 | Dupont wire F/F  |       38        |             |               |        N1         |            |            |
 | Dupont wire F/F  |       36        |             |               |        N2         |            |            |
-| Dupont wire F/F  |       18        |             |               |        ENA        |            |            |
+| Dupont wire F/F  |       12        |             |               |        ENA        |            |            |
 | Dupont wire F/F  |       18        |             |               |        N3         |            |            |
 | Dupont wire F/F  |       16        |             |               |        N4         |            |            |
 | Dupont wire F/F  |       35        |             |               |        ENB        |            |            |
 | Dupont wire H/   |       2         |             |               |        5V         |            |            |
-| Dupont wire M/F  |       4         |             |               |                   |    28 E    |            |
+| Dupont wire M/F  |       4         |             |               |                   |    17 F    |            |
 | Dupont wire      |       6         |             |               |       GND (Y)     |            |      -     |
-| Dupont wire M/F  |       11        |             |               |                   |    27 E    |            |
-| Dupont wire M/F  |       13        |             |               |                   |    36 H    |            |
-| Dupont wire M/F  |       39        |             |               |                   |    40 I    |            |
-| Dupont wire      |                 |     UP      |               |       OUT 1       |            |            |
-| Dupont wire      |                 |    DOWN     |               |       OUT 2       |            |            |
-| Dupont wire      |                 |             |      UP       |       OUT 4       |            |            |
-| Dupont wire      |                 |             |     DOWN      |       OUT 3       |            |            |
+| Dupont wire M/F  |       11        |             |               |                   |    16 F    |            |
+| Dupont wire M/F  |       13        |             |               |                   |    15 C    |            |
+| Dupont wire M/F  |       9         |             |               |                   |    5 B     |            |
+| Dupont wire      |                 |     UP      |               |       OUT 4       |            |            |
+| Dupont wire      |                 |    DOWN     |               |       OUT 3       |            |            |
+| Dupont wire      |                 |             |      UP       |       OUT 1       |            |            |
+| Dupont wire      |                 |             |     DOWN      |       OUT 2       |            |            |
 | Dupont wire      |                 |             |               |       12V         |            |      +     |
-| Dupont wire M/M  |                 |             |               |                   | 35 E - 40 F|            |
-| Resistance       |                 |             |               |                   | 36 D - 36 F|            |
-| Resistance       |                 |             |               |                   | 40 J - 36 J|            |
-| HC-SR04          |                 |             |               |                   | 32A <-> 35A|            |
+| Dupont wire M/M  |                 |             |               |                   | 14 F - 5 E |            |
+| Resistance       |                 |             |               |                   | 15 E - 15 G|            |
+| Resistance       |                 |             |               |                   | 15 A - 5 A |            |
+| HC-SR04          |                 |             |               |                   | 14I <-> 17I|            |
 
 ### gpio
 
