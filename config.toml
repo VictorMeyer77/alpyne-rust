@@ -1,12 +1,12 @@
 [motor_one_pin]
-enable = 18
-input_one = 20
-input_two = 16
-
-[motor_two_pin]
 enable = 19
 input_one = 23
 input_two = 24
+
+[motor_two_pin]
+enable = 18
+input_one = 20
+input_two = 16
 
 [ultrasonic_pin]
 trigger = 17
