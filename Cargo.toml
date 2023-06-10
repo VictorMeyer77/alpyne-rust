@@ -11,3 +11,5 @@ serde = { version = "1.0.160", features = ["derive"] }
 rppal = "0.14.1"
 rand = "0.8.5"
 ctrlc = "3.2.5"
+rscam = "0.5.5"
+image = "0.24.6"
