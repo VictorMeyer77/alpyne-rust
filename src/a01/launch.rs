@@ -32,7 +32,6 @@ fn iteration(
     let history_max_size: usize = 4;
     let current_dist: u16 = ultrasonic_sensor.get_distance() as u16;
     history_add(history_dist, history_max_size, current_dist);
-    println!("{}", current_dist);
     if is_blocked(&history_dist, history_max_size) {
         motor.drive(Direction::Backward);
         thread::sleep(Duration::from_millis(1500));
