@@ -62,10 +62,10 @@ impl fmt::Display for UltrasonicPin {
 
 #[derive(Deserialize, Debug, PartialEq)]
 pub struct Camera {
-    pub resolution_source_height: u32,
     pub resolution_source_width: u32,
-    pub resolution_target_height: u32,
+    pub resolution_source_height: u32,
     pub resolution_target_width: u32,
+    pub resolution_target_height: u32,
 }
 
 impl fmt::Display for Camera {
@@ -73,8 +73,8 @@ impl fmt::Display for Camera {
         write!(
             f,
             "Source resolution {:?}, Target resolution {:?}",
-            (self.resolution_source_height, self.resolution_source_width),
-            (self.resolution_target_height, self.resolution_target_width)
+            (self.resolution_source_width, self.resolution_source_height),
+            (self.resolution_target_width, self.resolution_target_height)
         )
     }
 }
@@ -103,10 +103,10 @@ mod tests {
             echo: 8,
         };
         let camera: Camera = Camera {
-            resolution_source_height: 1280,
-            resolution_source_width: 720,
-            resolution_target_height: 64,
-            resolution_target_width: 32,
+            resolution_source_width: 1280,
+            resolution_source_height: 720,
+            resolution_target_width: 64,
+            resolution_target_height: 32,
         };
         Config {
             motor_one_pin,
@@ -135,10 +135,10 @@ trigger = 7
 echo = 8
 
 [camera]
-resolution_source_height = 1280
-resolution_source_width = 720
-resolution_target_height = 64
-resolution_target_width = 32
+resolution_source_width = 1280
+resolution_source_height = 720
+resolution_target_width = 64
+resolution_target_height = 32
         ";
         let mut file = File::create(config_path).unwrap();
         file.write_all(str_config.as_bytes()).unwrap();
