@@ -8,6 +8,7 @@ pub struct Config {
     pub motor_one_pin: MotorPin,
     pub motor_two_pin: MotorPin,
     pub ultrasonic_pin: UltrasonicPin,
+    pub camera: Camera,
 }
 
 impl Config {
@@ -23,8 +24,9 @@ impl fmt::Display for Config {
             f,
             "Motor One Pin -> {}\n\
             Motor Two Pin -> {}\n\
-            Ultrasonic Pin -> {}",
-            self.motor_one_pin, self.motor_two_pin, self.ultrasonic_pin
+            Ultrasonic Pin -> {}\n\
+            Camera -> {}",
+            self.motor_one_pin, self.motor_two_pin, self.ultrasonic_pin, self.camera
         )
     }
 }
@@ -58,6 +60,25 @@ impl fmt::Display for UltrasonicPin {
     }
 }
 
+#[derive(Deserialize, Debug, PartialEq)]
+pub struct Camera {
+    pub resolution_source_height: u32,
+    pub resolution_source_width: u32,
+    pub resolution_target_height: u32,
+    pub resolution_target_width: u32,
+}
+
+impl fmt::Display for Camera {
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+        write!(
+            f,
+            "Source resolution {:?}, Target resolution {:?}",
+            (self.resolution_source_height, self.resolution_source_width),
+            (self.resolution_target_height, self.resolution_target_width)
+        )
+    }
+}
+
 #[cfg(test)]
 mod tests {
 
@@ -81,10 +102,17 @@ mod tests {
             trigger: 7,
             echo: 8,
         };
+        let camera: Camera = Camera {
+            resolution_source_height: 1280,
+            resolution_source_width: 720,
+            resolution_target_height: 64,
+            resolution_target_width: 32,
+        };
         Config {
             motor_one_pin,
             motor_two_pin,
             ultrasonic_pin,
+            camera,
         }
     }
 
@@ -105,6 +133,12 @@ input_two = 6
 [ultrasonic_pin]
 trigger = 7
 echo = 8
+
+[camera]
+resolution_source_height = 1280
+resolution_source_width = 720
+resolution_target_height = 64
+resolution_target_width = 32
         ";
         let mut file = File::create(config_path).unwrap();
         file.write_all(str_config.as_bytes()).unwrap();
@@ -120,7 +154,8 @@ echo = 8
             "\
 Motor One Pin -> Enable 1, Input One 2, Input Two 3
 Motor Two Pin -> Enable 4, Input One 5, Input Two 6
-Ultrasonic Pin -> Trigger 7, Echo 8"
+Ultrasonic Pin -> Trigger 7, Echo 8
+Camera -> Source resolution (1280, 720), Target resolution (64, 32)"
         );
     }
 }

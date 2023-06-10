@@ -11,3 +11,9 @@ input_two = 16
 [ultrasonic_pin]
 trigger = 17
 echo = 27
+
+[camera]
+resolution_source_height = 1280
+resolution_source_width = 720
+resolution_target_height = 64
+resolution_target_width = 64
